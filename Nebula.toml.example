@@ -1,0 +1,6 @@
+[network]
+rpc = "https://tm.injective.network:443"
+grpc = "https://grpc.injective.network:443"
+chain_id = "injective-1"
+address = ""
+mnemonic = ""
