@@ -1,20 +1,37 @@
+use cosmos_grpc_client::Decimal;
+use cosmos_grpc_client::GrpcClient;
+use cosmos_grpc_client::Wallet;
+use cosmos_grpc_client::CoinType;
 
+use std::str::FromStr;
 
 mod init;
 mod types;
 
-#[cfg(test)]
-mod tests;
-
 #[tokio::main]
 async fn main() {
-    let i = init::instantiate(
+    let data = types::readConfig();
+    let mut client = GrpcClient::new("http://injective-grpc.polkachu.com:14390").await.unwrap();
+    let wallet = Wallet::new(
+        &mut client,
+        &data.auth.mnemonic,
+        "inj",
+        CoinType::Injective,
+        0,
+        Decimal::from_str("1000000000").unwrap(), // Gas_price
+        Decimal::from_str("1.5").unwrap(), // Gas_adjustment
+        "inj",
+    ).await.unwrap();
+
+    init::instantiate_cw721(
+        client,
         types::CollectionInfo {
-            name: "Nebula".to_string(),
-            symbol: "NBLA".to_string(),
-            description: "Nebula is a collection of 10,000 unique NFTs living on the Injective Chain.".to_string(),
-            max_supply: 10000
-        }
-    ).await;
-    println!("{}", i);
+            name: &data.contract.name, 
+            description: &data.contract.description,, 
+            symbol: &data.contract.symbol, 
+            max_supply: &data.contract.max_supply,
+            minter: wallet.account_address()
+        },
+        wallet
+    ).await
 }

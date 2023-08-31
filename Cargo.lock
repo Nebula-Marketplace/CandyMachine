@@ -302,9 +302,9 @@ checksum = "28c122c3980598d243d63d9a704629a2d748d101f278052ff068be5a4423ab6f"
 
 [[package]]
 name = "cosmos-grpc-client"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "24e7e89a6077577a666e49e7a07655fa9790d05b8f9ef6164c3d2635e0164c90"
+checksum = "acc52528a3aa6ae7308322e4bc68f8ee2f4cc9c12b89c78898bfe1a6d77df979"
 dependencies = [
  "bip32",
  "bip39",
@@ -316,7 +316,6 @@ dependencies = [
  "hdpath",
  "injective-protobuf",
  "osmosis-std",
- "prost",
  "protobuf",
  "serde",
  "serde_json",

@@ -1,12 +1,8 @@
 use serde_derive::Deserialize;
-// use cosm_tome_wasm_deploy_fork::chain::response::ChainTxResponse;
-// use std::fs;
-// use std::process::exit;
-// use toml;
+use std::fs;
+use std::process::exit;
+use toml;
 use serde::Serialize;
-use core::str::FromStr;
-// use cosmrs::AccountId;
-// use cosmrs::crypto::secp256k1;
 
 // use cosmos_sdk_proto::cosmos::auth::v1beta1::{QueryAccountRequest, QueryAccountResponse};
 // use cosmos_sdk_proto::cosmos::bank::v1beta1::QueryBalanceRequest;
@@ -25,7 +21,7 @@ pub fn readConfig() -> Data {
     let contents = match fs::read_to_string(filename) {
         Ok(c) => c,
         Err(_) => {
-            println!("Error reading file {}", filename);
+            println!("Error opening file {}", filename);
             exit(1);
         }
     };
@@ -38,8 +34,8 @@ pub fn readConfig() -> Data {
         }
     };
 
-    if  data.network.address == "" || 
-        data.network.private_key == "" || 
+    if  data.auth.address == "" || 
+        data.auth.mnemonic == "" || 
         data.network.chain_id == "" || 
         data.network.grpc == "" || 
         data.network.rpc == "" {
@@ -50,47 +46,47 @@ pub fn readConfig() -> Data {
     return data;
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Network {
     pub rpc: String,
     pub grpc: String,
     pub chain_id: String,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CollectionCreator {
     pub address: String,
     pub share: u8,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Auth {
-    mnemonic: String,
-    address: String
+    pub mnemonic: String,
+    pub address: String
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ContractInfo {
-    admin: String,
-    max_supply: u16,
-    collection_name: String,
-    collection_symbol: String,
-    collection_description: String,
-    collection_banner_uri: String,
-    collection_pfp_uri: String,
-    collection_ext_uri: String,
-    royalty_bps: u8,
-    creators: Vec<CollectionCreator>,
+    pub admin: String,
+    pub max_supply: u16,
+    pub collection_name: String,
+    pub collection_symbol: String,
+    pub collection_description: String,
+    pub collection_banner_uri: String,
+    pub collection_pfp_uri: String,
+    pub collection_ext_uri: String,
+    pub royalty_bps: u8,
+    pub creators: Vec<CollectionCreator>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Data {
     pub network: Network,
     pub contract: ContractInfo,
     pub auth: Auth
 }
 
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct InstantiateResponse {
     pub code_id: u8,
     pub contract: String,
@@ -98,18 +94,19 @@ pub struct InstantiateResponse {
     pub collection: CollectionInfo
 }
 
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MintResponse {
 
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CollectionInfo {
     pub name: String,
     pub symbol: String,
     pub description: String,
-    pub max_supply: u16
+    pub max_supply: u128,
+    pub minter: String
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
