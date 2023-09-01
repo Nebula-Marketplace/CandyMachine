@@ -87,9 +87,6 @@ pub async fn mint(mut client: GrpcClient, message: MsgMint, wallet: Wallet) -> R
 }
 
 pub async fn simulate_mint(mut client: GrpcClient, message: MsgMint, wallet: Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
-    let data = readConfig();
-    assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
-
     let request = MsgExecuteContract {
             sender: wallet.account_address(), 
             contract: message.contract.clone(),
