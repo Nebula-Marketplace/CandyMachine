@@ -1,4 +1,4 @@
-![Tests](https://github.com/morgandri1/injective-cw721/actions/workflows/rust.yml/badge.svg)
+![Tests](https://github.com/Nebula-Marketplace/CandyMachine/actions/workflows/rust.yml/badge.svg)
 
 # CandyMachine
 The Nebula marketplace rust candymachine for cw721 spec nfts
