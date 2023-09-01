@@ -40,13 +40,10 @@ pub async fn instantiate_cw721(mut client: GrpcClient, collection: CollectionInf
     // Instantiate response should contain codeid, contract address, tx hash, block height at confirmation
 }
 
-pub async fn simulate_cw721(mut client: GrpcClient, collection: CollectionInfo, wallet: Wallet)  {
-    let data = readConfig();
-    assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
-
+pub async fn simulate_cw721(mut client: GrpcClient, collection: CollectionInfo, wallet: Wallet, admin: String)  {
     let request = MsgInstantiateContract {
-            sender: data.auth.address, 
-            admin: data.contract.admin,
+            sender: wallet.account_address(), 
+            admin: admin,
             code_id: 49,
             label: "Init Nebula cw721".to_string(),
             msg: to_vec(&collection).expect("Serialization failed."),

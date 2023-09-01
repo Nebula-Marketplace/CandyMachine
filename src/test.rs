@@ -32,11 +32,10 @@ use crate::init::{
 
 #[tokio::test]
 async fn test_init() {
-    let data = readConfig();
     let mut client = GrpcClient::new("http://injective-grpc.polkachu.com:14390").await.unwrap();
     let wallet = Wallet::new(
         &mut client,
-        &data.auth.mnemonic,
+        "arrange cactus jewel fuel fantasy vote picture kitchen stand talk jelly foot".to_string(),
         "inj",
         CoinType::Injective,
         0,
@@ -45,7 +44,7 @@ async fn test_init() {
         "inj",
     ).await.unwrap();
 
-    assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
+    assert_eq!("inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr", &wallet.account_address()); // confirm wallet was properly derived from mnemonic
 
     let collection = CollectionInfo {
         name: "Nebula".to_string(), 
@@ -54,7 +53,7 @@ async fn test_init() {
         max_supply: 1,
         minter: wallet.account_address()
     };
-    simulate_cw721(client, collection, wallet).await;
+    simulate_cw721(client, collection, wallet, "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string()).await;
 }
 
 #[tokio::test]
@@ -71,6 +70,9 @@ async fn test_mint() {
         Decimal::from_str("1.5").unwrap(), // Gas_adjustment
         "inj",
     ).await.unwrap();
+
+    assert_eq!("inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr", &wallet.account_address()); // confirm wallet was properly derived from mnemonic
+
     let _ = simulate_mint(
         client,
         MsgMint {
