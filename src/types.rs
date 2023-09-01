@@ -3,6 +3,7 @@ use std::fs;
 use std::process::exit;
 use toml;
 use serde::Serialize;
+use cosmos_grpc_client::cosmos_sdk_proto::cosmos::base::abci::v1beta1::TxResponse;
 
 // use cosmos_sdk_proto::cosmos::auth::v1beta1::{QueryAccountRequest, QueryAccountResponse};
 // use cosmos_sdk_proto::cosmos::bank::v1beta1::QueryBalanceRequest;
@@ -86,11 +87,10 @@ pub struct Data {
     pub auth: Auth
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct InstantiateResponse {
     pub code_id: u8,
-    pub contract: String,
-    pub result: String,
+    pub result: Option<TxResponse>,
     pub collection: CollectionInfo
 }
 
@@ -105,7 +105,7 @@ pub struct CollectionInfo {
     pub name: String,
     pub symbol: String,
     pub description: String,
-    pub max_supply: u128,
+    pub max_supply: u16,
     pub minter: String
 }
 
@@ -114,7 +114,12 @@ pub struct MsgMint {
     pub sender: String,
     pub contract: String,
     pub funds: u8,
-    pub msg: Mint
+    pub msg: M
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct M {
+    pub mint: Mint
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -126,7 +131,7 @@ pub struct Mint {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Royalties {
-    pub seller_fee_basis_points: u16,
+    pub seller_fee_basis_points: u8,
     pub creators: Vec<CollectionCreator>,
     pub primary_sell_happened: bool
 }
