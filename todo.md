@@ -3,8 +3,9 @@
 - [x] init contract
 - [x] write init tests
 - [x] add mint message
-- [ ] execute mint message
+- [x] execute mint message
 - [x] write mint tests
 - [ ] add talis interop func (make post requests to db. will need to do some reverse engineering)
 - [ ] make sure transfers work from both admin account and non-admin account (shouldn't be a problem but contract code may be non-spec)
 - [x] migrate to [cosmos-rpc](https://github.com/Rhaki/cosmos-grpc-client/) !Priority! 
+- [ ] clean up imports
