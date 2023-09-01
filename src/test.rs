@@ -1,7 +1,12 @@
 use crate::types::{
     CollectionInfo,
     readConfig,
-    InstantiateResponse
+    InstantiateResponse,
+    MsgMint,
+    M,
+    Mint,
+    Royalties,
+    CollectionCreator
 };
 
 use std::str::FromStr;
@@ -55,11 +60,10 @@ async fn test_init() {
 #[tokio::test]
 async fn test_mint() {
     let address = "inj1xcy30kk2v5hyhk06wx6v4cn392amxwzx3smer8"; // Test contract address
-    let data = readConfig();
     let mut client = GrpcClient::new("http://injective-grpc.polkachu.com:14390").await.unwrap();
     let wallet = Wallet::new(
         &mut client,
-        &data.auth.mnemonic,
+        "arrange cactus jewel fuel fantasy vote picture kitchen stand talk jelly foot".to_string(),
         "inj",
         CoinType::Injective,
         0,
@@ -69,11 +73,25 @@ async fn test_mint() {
     ).await.unwrap();
     let _ = simulate_mint(
         client,
-        construct_mint_msg_self(
-            "ipfs://QmNtkD8y4i9xDQtzNFVsiu1kcnoYbMVshwEJLtZNMwNcxa/1807.json".to_string(),
-            data.clone(),
-            address.to_string(), 
-        ),
+        MsgMint {
+            sender: "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string(),
+            contract: address.to_string(),
+            funds: 0,
+            msg: M {
+                    mint: Mint {
+                    owner: "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string(),
+                    metadata_uri: "https://github.com/Nebula-Marketplace/CandyMachine".to_string(),
+                    royalty: Royalties {
+                        seller_fee_basis_points: 0,
+                        creators: vec![CollectionCreator {
+                            address: "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string(),
+                            share: 100
+                        }],
+                        primary_sell_happened: true
+                    }
+                }
+            }
+        },
         wallet
     ).await.unwrap();
 }

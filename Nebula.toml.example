@@ -3,19 +3,20 @@ rpc = "https://tm.injective.network:443"
 grpc = "https://grpc.injective.network:443"
 chain_id = "injective-1"
 
+[auth]
+mnemonic = "arrange cactus jewel fuel fantasy vote picture kitchen stand talk jelly foot"
+address = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr"
+
 [contract]
-private_key = "YOUR_PRIVATE_KEY_HERE"
-address = "YOUR_ADDRESS_HERE"
-admin = "YOUR_ADMIN_ADDRESS_HERE (normally same as address)"
-max_supply = 0
-collection_name = "YOUR_COLLECTION_NAME_HERE"
-collection_symbol = "YOUR_COLLECTION_SYMBOL_HERE"
-collection_description = "YOUR_COLLECTION_DESCRIPTION_HERE"
+admin = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr"
+max_supply = 1
+collection_name = "Nebula Test"
+collection_symbol = "NEBULA"
+collection_description = "The first nebula deployed contract"
 collection_banner_uri = "YOUR_COLLECTION_BANNER_URI_HERE"
 collection_pfp_uri = "YOUR_COLLECTION_PFP_URI_HERE"
 collection_ext_uri = "YOUR_COLLECTION_EXT_URI_HERE"
-royalty_bps = 100 # 1%
+royalty_bps = 100 
 creators = [
-    { address = "YOUR_CREATOR_ADDRESS_HERE", share = 50 }, 
-    { address = "YOUR_SECOND_CREATOR_ADDRESS_HERE", share = 50 }
+    { address = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr", share = 100 }
 ]
