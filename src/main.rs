@@ -4,9 +4,14 @@ use cosmos_grpc_client::Wallet;
 use cosmos_grpc_client::CoinType;
 
 use std::str::FromStr;
+use serde_json::to_string;
 
 mod init;
 mod types;
+mod mint;
+
+#[cfg(test)]
+mod test;
 
 #[tokio::main]
 async fn main() {
@@ -23,15 +28,25 @@ async fn main() {
         "inj",
     ).await.unwrap();
 
-    init::instantiate_cw721(
+    let msg = init::instantiate_cw721(
         client,
         types::CollectionInfo {
-            name: &data.contract.name, 
-            description: &data.contract.description,, 
-            symbol: &data.contract.symbol, 
-            max_supply: &data.contract.max_supply,
+            name: data.contract.collection_name.clone(), 
+            description: data.contract.collection_description.clone(),
+            symbol: data.contract.collection_symbol.clone(), 
+            max_supply: data.contract.max_supply.clone(),
             minter: wallet.account_address()
         },
         wallet
-    ).await
+    ).await;
+
+    println!("msg: {:?}", msg);
 }
+
+// fn main() {
+//     println!("{:?}", to_string(&mint::construct_mint_msg_self(
+//         "https://github.com/Nebula-Marketplace".to_string(),
+//         types::readConfig(),
+//         "inj1a0cu20e2dupn8ja9xvuye8l2n6czxzp688zl30".to_string(), 
+//     )).unwrap());
+// }
