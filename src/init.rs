@@ -4,6 +4,7 @@ use crate::types::{
     InstantiateResponse
 };
 
+#[allow(unused_imports)]
 use std::str::FromStr;
 
 use cosmos_grpc_client::{
@@ -13,7 +14,7 @@ use cosmos_grpc_client::{
 };
 use serde_json::to_vec;
 
-pub async fn instantiate_cw721(mut client: GrpcClient, collection: CollectionInfo, wallet: Wallet) -> Result<InstantiateResponse, Box<dyn std::error::Error>> {
+pub async fn instantiate_cw721(client: &mut GrpcClient, collection: CollectionInfo, wallet: &Wallet) -> Result<InstantiateResponse, Box<dyn std::error::Error>> {
     let data = readConfig();
     assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
 
@@ -30,7 +31,7 @@ pub async fn instantiate_cw721(mut client: GrpcClient, collection: CollectionInf
 
     // println!("simulated transaction: \n {:?}", sim);
 
-    let response = wallet.broadcast_tx(&mut client, vec![request], None, None, BroadcastMode::Sync).await.unwrap();
+    let response = wallet.broadcast_tx(client, vec![request], None, None, BroadcastMode::Sync).await.unwrap();
 
     Ok(InstantiateResponse {
         code_id: 49,
@@ -40,7 +41,7 @@ pub async fn instantiate_cw721(mut client: GrpcClient, collection: CollectionInf
     // Instantiate response should contain codeid, contract address, tx hash, block height at confirmation
 }
 
-pub async fn simulate_cw721(mut client: GrpcClient, collection: CollectionInfo, wallet: Wallet, admin: String)  {
+pub async fn simulate_cw721(client: &mut GrpcClient, collection: CollectionInfo, wallet: Wallet, admin: String)  {
     let request = MsgInstantiateContract {
             sender: wallet.account_address(), 
             admin: admin,
@@ -50,5 +51,5 @@ pub async fn simulate_cw721(mut client: GrpcClient, collection: CollectionInfo, 
             funds: vec![]
         }.to_any().unwrap();
 
-    wallet.simulate_tx(&mut client, vec![request]).await.unwrap();
+    wallet.simulate_tx(client, vec![request]).await.unwrap();
 }

@@ -2,14 +2,13 @@ use crate::types::{
     MsgMint,
     Mint, 
     Royalties, 
-    CollectionCreator, 
-    CollectionInfo,
     MintResponse,
     Data,
     M,
     readConfig
 };
 
+#[allow(unused_imports)]
 use std::str::FromStr;
 
 use cosmos_grpc_client::{
@@ -69,7 +68,7 @@ pub fn construct_mint_msg_ext(
     }
 }
 
-pub async fn mint(mut client: GrpcClient, message: MsgMint, wallet: Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
+pub async fn mint(client: &mut GrpcClient, message: MsgMint, wallet: &Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
     let data = readConfig();
     assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
 
@@ -80,13 +79,13 @@ pub async fn mint(mut client: GrpcClient, message: MsgMint, wallet: Wallet) -> R
             funds: vec![]
         }.to_any().unwrap();
 
-    let response = wallet.broadcast_tx(&mut client, vec![request], None, None, BroadcastMode::Sync).await.unwrap();
+    let _response = wallet.broadcast_tx(client, vec![request], None, None, BroadcastMode::Async).await.unwrap();
 
     Ok(MintResponse {})
     // Instantiate response should contain codeid, contract address, tx hash, block height at confirmation
 }
 
-pub async fn simulate_mint(mut client: GrpcClient, message: MsgMint, wallet: Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
+pub async fn simulate_mint(client: &mut GrpcClient, message: MsgMint, wallet: Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
     let request = MsgExecuteContract {
             sender: wallet.account_address(), 
             contract: message.contract.clone(),
@@ -94,7 +93,7 @@ pub async fn simulate_mint(mut client: GrpcClient, message: MsgMint, wallet: Wal
             funds: vec![]
         }.to_any().unwrap();
 
-    let _sim = wallet.simulate_tx(&mut client, vec![request]).await.unwrap();
+    let _sim = wallet.simulate_tx(client, vec![request]).await.unwrap();
 
     Ok(MintResponse {})
 }

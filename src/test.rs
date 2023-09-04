@@ -1,7 +1,5 @@
 use crate::types::{
     CollectionInfo,
-    readConfig,
-    InstantiateResponse,
     MsgMint,
     M,
     Mint,
@@ -12,23 +10,12 @@ use crate::types::{
 use std::str::FromStr;
 
 use cosmos_grpc_client::{
-    GrpcClient, Wallet, BroadcastMode,
-    cosmos_sdk_proto::cosmwasm::wasm::v1::MsgInstantiateContract,
-    cosmrs::tx::MessageExt,
+    GrpcClient, Wallet,
     Decimal, CoinType, 
 };
-use serde_json::to_vec;
 
-use crate::mint::{
-    construct_mint_msg_ext,
-    construct_mint_msg_self,
-    mint,
-    simulate_mint
-};
-use crate::init::{
-    instantiate_cw721,
-    simulate_cw721
-};
+use crate::mint::simulate_mint;
+use crate::init::simulate_cw721;
 
 #[tokio::test]
 async fn test_init() {
@@ -53,7 +40,7 @@ async fn test_init() {
         max_supply: 1,
         minter: wallet.account_address()
     };
-    simulate_cw721(client, collection, wallet, "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string()).await;
+    simulate_cw721(&mut client, collection, wallet, "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string()).await;
 }
 
 #[tokio::test]
@@ -74,7 +61,7 @@ async fn test_mint() {
     assert_eq!("inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr", &wallet.account_address()); // confirm wallet was properly derived from mnemonic
 
     let _ = simulate_mint(
-        client,
+        &mut client,
         MsgMint {
             sender: "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr".to_string(),
             contract: address.to_string(),
