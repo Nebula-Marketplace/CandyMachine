@@ -85,6 +85,7 @@ pub async fn mint(client: &mut GrpcClient, message: MsgMint, wallet: &Wallet) ->
     // Instantiate response should contain codeid, contract address, tx hash, block height at confirmation
 }
 
+#[allow(dead_code)]
 pub async fn simulate_mint(client: &mut GrpcClient, message: MsgMint, wallet: Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
     let request = MsgExecuteContract {
             sender: wallet.account_address(), 

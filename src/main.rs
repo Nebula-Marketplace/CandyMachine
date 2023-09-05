@@ -89,6 +89,7 @@ async fn main() {
         let owner = token.owner;
         let uri = token.uri;
 
+        #[allow(unused_must_use)]
         mint::mint(
             &mut client,
             mint::construct_mint_msg_ext(

@@ -41,6 +41,7 @@ pub async fn instantiate_cw721(client: &mut GrpcClient, collection: CollectionIn
     // Instantiate response should contain codeid, contract address, tx hash, block height at confirmation
 }
 
+#[allow(dead_code)]
 pub async fn simulate_cw721(client: &mut GrpcClient, collection: CollectionInfo, wallet: Wallet, admin: String)  {
     let request = MsgInstantiateContract {
             sender: wallet.account_address(), 
