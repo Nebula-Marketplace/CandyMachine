@@ -38,8 +38,7 @@ pub fn readConfig() -> Data {
     if  data.auth.address == "" || 
         data.auth.mnemonic == "" || 
         data.network.chain_id == "" || 
-        data.network.grpc == "" || 
-        data.network.rpc == "" {
+        data.network.grpc == "" {
         println!("Error: Config not finished in {}", filename);
         exit(1);
     }
@@ -49,7 +48,6 @@ pub fn readConfig() -> Data {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Network {
-    pub rpc: String,
     pub grpc: String,
     pub chain_id: String,
 }
@@ -70,6 +68,7 @@ pub struct Auth {
 pub struct ContractInfo {
     pub admin: String,
     pub max_supply: u16,
+    pub code_id: u8, 
     pub collection_name: String,
     pub collection_symbol: String,
     pub collection_description: String,

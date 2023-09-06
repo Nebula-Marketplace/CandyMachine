@@ -4,6 +4,7 @@ use cosmos_grpc_client::Wallet;
 use cosmos_grpc_client::CoinType;
 use serde::Deserialize;
 
+use std::fmt::format;
 #[allow(unused_imports)]
 use std::str::FromStr;
 #[allow(unused_imports)]
@@ -38,7 +39,8 @@ struct TokenInfo {
 #[tokio::main]
 async fn main() {
     let data = types::readConfig();
-    let mut client = GrpcClient::new("http://injective-grpc.polkachu.com:14390").await.unwrap();
+    let static_addr: &'static str = Box::leak(data.network.grpc.clone().into_boxed_str());
+    let mut client = GrpcClient::new(static_addr).await.unwrap();
     let wallet = Wallet::new(
         &mut client,
         &data.auth.mnemonic,
@@ -95,7 +97,7 @@ async fn main() {
             mint::construct_mint_msg_ext(
                 owner,
                 uri,
-                data.clone(),
+                &data.clone(),
                 contract_address.clone()
             ),
             &wallet

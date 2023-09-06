@@ -49,7 +49,7 @@ pub fn construct_mint_msg_self(
 pub fn construct_mint_msg_ext(
     owner: String,
     url: String,
-    d: Data,
+    d: &Data,
     contract: String
 ) -> MsgMint {
     return MsgMint {
@@ -61,7 +61,7 @@ pub fn construct_mint_msg_ext(
                 owner: owner.clone(),
                 metadata_uri: url,
                 royalty: Royalties {
-                    seller_fee_basis_points: d.clone().contract.royalty_bps,
+                    seller_fee_basis_points: d.contract.royalty_bps,
                     creators: d.clone().contract.creators,
                     primary_sell_happened: true
                 }
