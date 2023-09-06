@@ -18,6 +18,7 @@ use cosmos_grpc_client::{
 };
 use serde_json::to_vec;
 
+#[allow(dead_code)]
 pub fn construct_mint_msg_self(
         url: String, 
         d: Data,
@@ -44,6 +45,7 @@ pub fn construct_mint_msg_self(
     }
 }
 
+#[allow(dead_code)]
 pub fn construct_mint_msg_ext(
     owner: String,
     url: String,
