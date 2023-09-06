@@ -9,4 +9,4 @@
 - [ ] make sure transfers work from both admin account and non-admin account (shouldn't be a problem but contract code may be non-spec)
 - [x] migrate to [cosmos-rpc](https://github.com/Rhaki/cosmos-grpc-client/) !Priority! 
 - [x] clean up imports
-- [ ] exchange contract
+- [x] exchange contract

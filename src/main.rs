@@ -4,7 +4,6 @@ use cosmos_grpc_client::Wallet;
 use cosmos_grpc_client::CoinType;
 use serde::Deserialize;
 
-use std::fmt::format;
 #[allow(unused_imports)]
 use std::str::FromStr;
 #[allow(unused_imports)]
@@ -82,7 +81,7 @@ async fn main() {
     // read json file
     let mut file = File::open("metadata.json").unwrap();
     let mut stdout = stdout();
-    let mut s = &copy(&mut file, &mut stdout).unwrap().to_string();
+    let s = &copy(&mut file, &mut stdout).unwrap().to_string();
     let json: Vec<TokenInfo> = serde_json::from_str(s).expect("JSON was not correctly formatted");
 
     println!("{:?}", json);
@@ -92,7 +91,7 @@ async fn main() {
         let uri = token.uri;
 
         #[allow(unused_must_use)]
-        mint::mint(
+        let _ = mint::mint(
             &mut client,
             mint::construct_mint_msg_ext(
                 owner,
