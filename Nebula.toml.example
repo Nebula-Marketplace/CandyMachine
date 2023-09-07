@@ -1,7 +1,6 @@
 [network]
-rpc = "https://tm.injective.network:443"
-grpc = "https://grpc.injective.network:443"
-chain_id = "injective-1"
+grpc = "http://injective-grpc.polkachu.com:14390" # http://k8s.testnet.chain.grpc.injective.network:443 for testnet
+chain_id = "injective-1" # injective-888 for testnet
 
 [auth]
 mnemonic = "arrange cactus jewel fuel fantasy vote picture kitchen stand talk jelly foot"
@@ -9,6 +8,7 @@ address = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr"
 
 [contract]
 admin = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr"
+code_id = 49 # 582 for testnet
 max_supply = 1
 collection_name = "Nebula Test"
 collection_symbol = "NEBULA"
@@ -20,3 +20,4 @@ royalty_bps = 100
 creators = [
     { address = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr", share = 100 }
 ]
+json = "contract.json"

@@ -79,7 +79,7 @@ async fn main() {
     stdin().read_line(&mut contract_address).expect("Failed");
     
     // read json file
-    let mut file = File::open("metadata.json").unwrap();
+    let mut file = File::open(&data.contract.json).unwrap();
     let mut stdout = stdout();
     let s = &copy(&mut file, &mut stdout).unwrap().to_string();
     let json: Vec<TokenInfo> = serde_json::from_str(s).expect("JSON was not correctly formatted");

@@ -29,8 +29,9 @@ pub fn readConfig() -> Data {
 
     let data: Data = match toml::from_str(&contents) {
         Ok(d) => d,
-        Err(_) => {
+        Err(err) => {
             println!("Error parsing file {}", filename);
+            println!("{}", err);
             exit(1);
         }
     };
@@ -68,7 +69,7 @@ pub struct Auth {
 pub struct ContractInfo {
     pub admin: String,
     pub max_supply: u16,
-    pub code_id: u8, 
+    pub code_id: u16, 
     pub collection_name: String,
     pub collection_symbol: String,
     pub collection_description: String,
@@ -77,6 +78,7 @@ pub struct ContractInfo {
     pub collection_ext_uri: String,
     pub royalty_bps: u8,
     pub creators: Vec<CollectionCreator>,
+    pub json: String
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
