@@ -17,8 +17,6 @@ use std::time::Duration;
 #[allow(unused_imports)]
 use rustc_serialize::json::Json;
 use std::fs::File;
-use std::io::copy;
-use std::io::stdout;
 
 extern crate serde;
 extern crate serde_json;
