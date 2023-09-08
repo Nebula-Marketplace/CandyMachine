@@ -78,7 +78,8 @@ pub struct ContractInfo {
     pub collection_ext_uri: String,
     pub royalty_bps: u8,
     pub creators: Vec<CollectionCreator>,
-    pub json: String
+    pub json: String,
+    pub contract_address: String
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -90,7 +91,6 @@ pub struct Data {
 
 #[derive(Debug, Clone)]
 pub struct InstantiateResponse {
-    pub code_id: u8,
     pub result: Option<TxResponse>,
     pub collection: CollectionInfo
 }

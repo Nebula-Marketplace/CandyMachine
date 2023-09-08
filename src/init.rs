@@ -14,14 +14,14 @@ use cosmos_grpc_client::{
 };
 use serde_json::to_vec;
 
-pub async fn instantiate_cw721(client: &mut GrpcClient, collection: CollectionInfo, wallet: &Wallet) -> Result<InstantiateResponse, Box<dyn std::error::Error>> {
+pub async fn instantiate_cw721(client: &mut GrpcClient, collection: CollectionInfo, wallet: &mut Wallet) -> Result<InstantiateResponse, Box<dyn std::error::Error>> {
     let data = readConfig();
     assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
 
     let request = MsgInstantiateContract {
             sender: data.auth.address, 
             admin: data.contract.admin,
-            code_id: 49,
+            code_id: data.contract.code_id as u64,
             label: "Init Nebula cw721".to_string(),
             msg: to_vec(&collection).expect("Serialization failed."),
             funds: vec![]
@@ -31,10 +31,9 @@ pub async fn instantiate_cw721(client: &mut GrpcClient, collection: CollectionIn
 
     // println!("simulated transaction: \n {:?}", sim);
 
-    let response = wallet.broadcast_tx(client, vec![request], None, None, BroadcastMode::Sync).await.unwrap();
+    let response = wallet.broadcast_tx(client, vec![request], None, None, BroadcastMode::Async).await.unwrap();
 
     Ok(InstantiateResponse {
-        code_id: 49,
         result: response.tx_response,
         collection: collection
     })

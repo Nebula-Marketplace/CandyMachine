@@ -20,7 +20,7 @@ use crate::init::simulate_cw721;
 #[tokio::test]
 async fn test_init() {
     let mut client = GrpcClient::new("http://injective-grpc.polkachu.com:14390").await.unwrap();
-    let wallet = Wallet::new(
+    let wallet = Wallet::from_seed_phrase(
         &mut client,
         "arrange cactus jewel fuel fantasy vote picture kitchen stand talk jelly foot".to_string(),
         "inj",
@@ -47,7 +47,7 @@ async fn test_init() {
 async fn test_mint() {
     let address = "inj1xcy30kk2v5hyhk06wx6v4cn392amxwzx3smer8"; // Test contract address
     let mut client = GrpcClient::new("http://injective-grpc.polkachu.com:14390").await.unwrap();
-    let wallet = Wallet::new(
+    let wallet = Wallet::from_seed_phrase(
         &mut client,
         "arrange cactus jewel fuel fantasy vote picture kitchen stand talk jelly foot".to_string(),
         "inj",

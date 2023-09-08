@@ -315,9 +315,9 @@ checksum = "28c122c3980598d243d63d9a704629a2d748d101f278052ff068be5a4423ab6f"
 
 [[package]]
 name = "cosmos-grpc-client"
-version = "0.2.2"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "acc52528a3aa6ae7308322e4bc68f8ee2f4cc9c12b89c78898bfe1a6d77df979"
+checksum = "1a244f25629ab57d1202952319c95694bdba4538f594cea746d357bc7f9ee976"
 dependencies = [
  "bip32",
  "bip39",

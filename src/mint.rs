@@ -70,7 +70,7 @@ pub fn construct_mint_msg_ext(
     }
 }
 
-pub async fn mint(client: &mut GrpcClient, message: MsgMint, wallet: &Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
+pub async fn mint(client: &mut GrpcClient, message: MsgMint, wallet: &mut Wallet) -> Result<MintResponse, Box<dyn std::error::Error>> {
     let data = readConfig();
     assert_eq!(&data.auth.address, &wallet.account_address()); // confirm wallet was properly derived from mnemonic
 
@@ -84,7 +84,6 @@ pub async fn mint(client: &mut GrpcClient, message: MsgMint, wallet: &Wallet) ->
     let _response = wallet.broadcast_tx(client, vec![request], None, None, BroadcastMode::Async).await.unwrap();
 
     Ok(MintResponse {})
-    // Instantiate response should contain codeid, contract address, tx hash, block height at confirmation
 }
 
 #[allow(dead_code)]
