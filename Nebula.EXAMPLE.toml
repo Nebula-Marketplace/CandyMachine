@@ -23,4 +23,4 @@ creators = [
     { address = "inj1s3hfffwfvehcmwxdltcmt5a4fntj4ytaqstxnr", share = 100 }
 ]
 json = "contract.json"
-contract_address = "inj1ngx4ls2z0yd0xremyzlyu9xha785f2h6l7ur0g"
+contract_address = "None"
