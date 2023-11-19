@@ -33,12 +33,12 @@ pub fn construct_mint_msg_self(
         funds: 0,
         msg: M {
                 mint: Mint {
-                owner: d.clone().auth.address,
-                metadata_uri: url,
-                royalty: Royalties {
-                    seller_fee_basis_points: d.clone().contract.royalty_bps,
-                    creators: d.clone().contract.creators,
-                    primary_sell_happened: true
+                    owner: d.clone().auth.address,
+                    metadata_uri: url,
+                    royalty: Royalties {
+                        seller_fee_basis_points: d.clone().contract.royalty_bps,
+                        creators: d.clone().contract.creators,
+                        primary_sell_happened: true
                 }
             }
         }

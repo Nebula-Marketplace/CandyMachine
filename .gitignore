@@ -4,3 +4,5 @@ Nebula.toml
 Cargo.lock
 *.lock
 contract.json
+contract.json
+*.py
